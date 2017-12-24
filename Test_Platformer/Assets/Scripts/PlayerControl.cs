@@ -2,92 +2,95 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Controller2D))]
 public class PlayerControl : MonoBehaviour {
 
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
-
-    [Range(1, 10)]
-    public float jumpVelocity = 10;
-
     public float speed = 3;
+    //跳跃高度和跳跃时间
+    public float jumpHeight = 4;
+    public float timeToJump = .4f;
+    
+    //空中地上加速度
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
 
-    Rigidbody rb;
+    Controller2D controller;
+
+    float gravity;
+    float jumpVelocity;
+
+    Vector3 velocity;
+
+    float velocityXSmoothing;
 
     Animator animator;
-
     GameObject gfx;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
 
+    void Start () {
+        controller = GetComponent<Controller2D>();
         gfx = GameObject.Find("GFX");
 
         animator = gfx.GetComponent<Animator>();
 
-    }
+        CalculateGravityAndJumpVelocity();
+	}
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetButtonDown("Jump") && !hopping)
+        float inputH = Input.GetAxisRaw("Horizontal");
+        float inputV = Input.GetAxisRaw("Vertical");
+
+        //上下方有物体时重置y速度
+        if (controller.collisions.above || controller.collisions.below)
         {
-            GetComponent<Rigidbody>().velocity = Vector3.up * jumpVelocity;
-
-            animator.SetBool("hopping", true);
+            velocity.y = 0;
         }
+
+        //接触地面
+        if (controller.collisions.below)
+        {
+            animator.SetBool("hopping", false);
+            //跳跃
+            if (Input.GetKey(KeyCode.Space))
+            {
+                velocity.y = jumpVelocity;
+
+                animator.SetBool("hopping", true);
+            }
+        }
+        //计算速度
+        float targetVelocityX = inputH * speed;
+        velocity.y += gravity * Time.deltaTime;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, 
+            (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+        //移动
+        controller.Move(velocity * Time.deltaTime);
+        //行走动画
+        animator.SetFloat("walkSpeed", Mathf.Abs(inputH));
+
+        //特殊跳跃机制
+        GravityJump();
+
     }
 
-    private void FixedUpdate()
+    //根据跳跃高度和时间计算重力和速度
+    void CalculateGravityAndJumpVelocity()
     {
-        PlayerMove();
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJump, 2);
 
-        if(hopping)
-            GravityJump();
-
+        jumpVelocity = Mathf.Abs(gravity) * timeToJump;
     }
 
-    void PlayerMove()
-    {
-        float inputV = Input.GetAxis("Vertical");
-        float inputH = Input.GetAxis("Horizontal");
-
-        transform.Translate(Vector3.right * inputH * speed * Time.deltaTime, Space.World);
-
-        animator.SetFloat("walkSpeed", inputH);
-    }
-
+    //特殊跳跃机制
     void GravityJump()
     {
-        //下落时（或上升中放开空格）附加重力
-        if (rb.velocity.y < 0)
+        if(velocity.y > 0 && !Input.GetButton("Jump"))
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            //在上升中没按着跳跃键，则附加重力加速落地
+            velocity += Vector3.up * gravity * Time.deltaTime;
         }
     }
 
-    public bool hopping = false;
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log(collision.collider);
-        //Debug.Log(collision.rigidbody);
-
-        hopping = false;
-
-        animator.SetBool("hopping", false);
-
-
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        Debug.Log("Exit");
-
-        hopping = true;
-    }
 }

@@ -19,6 +19,8 @@ public class Controller2D : MonoBehaviour {
     public CollisionInfo collisions;
 
     public LayerMask collisionMask;
+    //最大可攀爬角度
+    public float maxClambAngle = 60;
 
     void Start () {
         collider = GetComponent<BoxCollider2D>();
@@ -41,13 +43,15 @@ public class Controller2D : MonoBehaviour {
             VerticalCollisions(ref _velocity);
         //移动
         transform.Translate(_velocity);
+
+        //print(collisions.below);
     }
     //水平碰撞判定
     void HorizontalCollisions(ref Vector3 _velocity)
     {
         //速度正负方向
         float directionX = Mathf.Sign(_velocity.x);
-
+        //光束长度
         float rayLength = Mathf.Abs(_velocity.x) + skinWidth;
 
         for (int i = 0; i < horizontalRayCount; i++)
@@ -61,13 +65,38 @@ public class Controller2D : MonoBehaviour {
             //碰到物体
             if (hit)
             {
-                _velocity.x = (hit.distance - skinWidth) * directionX;
-                rayLength = hit.distance;
+                //坡角度
+                float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (i == 0 && slopeAngle <= maxClambAngle)
+                {
+                    float distanceToSlopeStart = 0;
+                    //进入新的坡
+                    if (slopeAngle != collisions.slopeAngleOld)
+                    {
+                        distanceToSlopeStart = hit.distance - skinWidth;
+                        _velocity.x -= distanceToSlopeStart * directionX;
+                    }
+                    //爬坡
+                    ClampSlope(ref _velocity, slopeAngle);
+                    _velocity.x += distanceToSlopeStart * directionX;
+                }
+                //爬不动坡
+                if(!collisions.clambingSlope || slopeAngle > maxClambAngle)
+                {
+                    //根据距离确定下一步移动距离
+                    _velocity.x = (hit.distance - skinWidth) * directionX;
+                    rayLength = hit.distance;
+                    //在爬坡
+                    if (collisions.clambingSlope)
+                    {
+                        _velocity.y = Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(_velocity.x);
+                    }
 
-                //若方向向左则为真
-                collisions.left = directionX == -1;
-                //向右
-                collisions.right = directionX == 1;
+                    //若方向向左则为真
+                    collisions.left = directionX == -1;
+                    //向右
+                    collisions.right = directionX == 1;
+                }
 
             }
         }
@@ -90,12 +119,18 @@ public class Controller2D : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.blue);
-
+            //有障碍物
             if (hit)
             {
                 //当距离为0时速度也为0
                 _velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
+                //在爬墙
+                if (collisions.clambingSlope)
+                {
+                    //上方有障碍限制x方向移动
+                    _velocity.x = _velocity.y / Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Sign(_velocity.x);
+                }
 
                 //若方向向下则为真
                 collisions.below = directionY == -1;
@@ -131,6 +166,28 @@ public class Controller2D : MonoBehaviour {
         verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
     }
 
+    void ClampSlope(ref Vector3 velocity, float slopeAngle)
+    {
+        //在平地上应该移动的水平距离，若有障碍物则为0
+        float moveDistance = Mathf.Abs(velocity.x);
+        float climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if(velocity.y > climbVelocityY)
+        {
+            print("Jumping");
+        }
+        else
+        {
+            //计算在斜坡上的xy轴移动距离
+            velocity.y = climbVelocityY;
+            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+            //设置为接触地面
+            collisions.below = true;
+            collisions.clambingSlope = true;
+            collisions.slopeAngle = slopeAngle;
+        }
+    }
+
     struct RaycastOrigin
     {
         public Vector2 topLeft, topRight;
@@ -140,11 +197,18 @@ public class Controller2D : MonoBehaviour {
     public struct CollisionInfo {
         public bool above, below;
         public bool left, right;
+        public bool clambingSlope;
+
+        public float slopeAngle, slopeAngleOld;
 
         public void Reset()
         {
             above = below = false;
             left = right = false;
+            clambingSlope = false;
+
+            slopeAngleOld = slopeAngle;
+            slopeAngle = 0;
         }
     }
 

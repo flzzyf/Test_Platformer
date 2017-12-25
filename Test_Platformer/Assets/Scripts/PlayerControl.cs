@@ -39,7 +39,7 @@ public class PlayerControl : MonoBehaviour {
     void FixedUpdate()
     {
         float inputH = Input.GetAxisRaw("Horizontal");
-        float inputV = Input.GetAxisRaw("Vertical");
+        //float inputV = Input.GetAxisRaw("Vertical");
 
         //上下方有物体时重置y速度
         if (controller.collisions.above || controller.collisions.below)
@@ -50,13 +50,15 @@ public class PlayerControl : MonoBehaviour {
         //接触地面
         if (controller.collisions.below)
         {
+            if(animator != null)
             animator.SetBool("hopping", false);
             //跳跃
             if (Input.GetKey(KeyCode.Space))
             {
                 velocity.y = jumpVelocity;
+                if (animator != null)
 
-                animator.SetBool("hopping", true);
+                    animator.SetBool("hopping", true);
             }
         }
         //计算速度
@@ -68,7 +70,8 @@ public class PlayerControl : MonoBehaviour {
         //移动
         controller.Move(velocity * Time.deltaTime);
         //行走动画
-        animator.SetFloat("walkSpeed", Mathf.Abs(inputH));
+        if(animator != null)
+            animator.SetFloat("walkSpeed", Mathf.Abs(inputH));
 
         //特殊跳跃机制
         GravityJump();

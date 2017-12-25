@@ -19,8 +19,11 @@ public class Controller2D : MonoBehaviour {
     public CollisionInfo collisions;
 
     public LayerMask collisionMask;
+
     //最大可攀爬角度
     public float maxClambAngle = 60;
+    //最大下坡角度（超过会直接掉下来
+    public float maxDescendAngle = 55;
 
     void Start () {
         collider = GetComponent<BoxCollider2D>();
@@ -35,6 +38,11 @@ public class Controller2D : MonoBehaviour {
         UpdateRaycastOrigins();
         //重置碰撞
         collisions.Reset();
+        //之前速度
+        collisions.velocityOld = _velocity;
+        //下坡
+        if (_velocity.y < 0)
+            DescendSlope(ref _velocity);
         //水平碰撞判定
         if (_velocity.x != 0)
             HorizontalCollisions(ref _velocity);
@@ -69,6 +77,11 @@ public class Controller2D : MonoBehaviour {
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxClambAngle)
                 {
+                    if (collisions.descendingSlope)
+                    {
+                        collisions.descendingSlope = false;
+                        _velocity = collisions.velocityOld;
+                    }
                     float distanceToSlopeStart = 0;
                     //进入新的坡
                     if (slopeAngle != collisions.slopeAngleOld)
@@ -174,7 +187,7 @@ public class Controller2D : MonoBehaviour {
 
         if(velocity.y > climbVelocityY)
         {
-            print("Jumping");
+            //print("Jumping");
         }
         else
         {
@@ -188,6 +201,43 @@ public class Controller2D : MonoBehaviour {
         }
     }
 
+    void DescendSlope(ref Vector3 _velocity)
+    {
+        //速度正负方向
+        float directionX = Mathf.Sign(_velocity.x);
+
+        Vector2 rayOrigin = (directionX == -1) ? raycastOrigin.bottomRight : raycastOrigin.bottomLeft;
+
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
+
+        if (hit)
+        {
+            //坡角度
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            //坡角在合适范围内
+            if (slopeAngle != 0 && slopeAngle <= maxClambAngle)
+            {
+                //在下坡
+                if(Mathf.Sign(hit.normal.x) == directionX)
+                {
+                    //
+                    if(hit.distance - skinWidth <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(_velocity.x))
+                    {
+                        float moveDistance = Mathf.Abs(_velocity.x);
+                        float descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+                        _velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(_velocity.x);
+                        _velocity.y -= descendVelocityY;
+
+                        collisions.slopeAngle = slopeAngle;
+                        collisions.descendingSlope = true;
+                        collisions.below = true;
+                    }
+                }
+
+            }
+        }
+    }
+
     struct RaycastOrigin
     {
         public Vector2 topLeft, topRight;
@@ -198,14 +248,18 @@ public class Controller2D : MonoBehaviour {
         public bool above, below;
         public bool left, right;
         public bool clambingSlope;
+        public bool descendingSlope;
 
         public float slopeAngle, slopeAngleOld;
+
+        public Vector3 velocityOld;
 
         public void Reset()
         {
             above = below = false;
             left = right = false;
             clambingSlope = false;
+            descendingSlope = false;
 
             slopeAngleOld = slopeAngle;
             slopeAngle = 0;

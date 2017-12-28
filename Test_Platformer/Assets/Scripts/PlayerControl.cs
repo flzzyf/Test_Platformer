@@ -26,10 +26,12 @@ public class PlayerControl : MonoBehaviour {
     Animator animator;
     GameObject gfx;
 
+    SpriteRenderer sprite;
 
     void Start () {
         controller = GetComponent<Controller2D>();
         gfx = GameObject.Find("GFX");
+        sprite = gfx.GetComponent<SpriteRenderer>();
 
         animator = gfx.GetComponent<Animator>();
 
@@ -40,6 +42,21 @@ public class PlayerControl : MonoBehaviour {
     {
         float inputH = Input.GetAxisRaw("Horizontal");
         //float inputV = Input.GetAxisRaw("Vertical");
+
+        if(inputH != 0)
+        {
+            //float directionH = Mathf.Sign(inputH);
+
+            if(inputH > 0)
+            {
+                sprite.flipX = false;
+            }
+            else
+            {
+                sprite.flipX = true;
+
+            }
+        }
 
         //上下方有物体时重置y速度
         if (controller.collisions.above || controller.collisions.below)

@@ -43,7 +43,7 @@ public class PlayerControl : MonoBehaviour {
         float inputH = Input.GetAxisRaw("Horizontal");
         //float inputV = Input.GetAxisRaw("Vertical");
 
-        if(inputH != 0)
+        if(inputH != 0 && sprite != null)
         {
             //float directionH = Mathf.Sign(inputH);
 

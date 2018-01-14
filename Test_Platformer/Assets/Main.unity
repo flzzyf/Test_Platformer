@@ -12950,6 +12950,7 @@ GameObject:
   - component: {fileID: 2042800635}
   - component: {fileID: 2042800634}
   - component: {fileID: 2042800636}
+  - component: {fileID: 2042800637}
   m_Layer: 8
   m_Name: Pinkie
   m_TagString: Untagged
@@ -13029,6 +13030,17 @@ MonoBehaviour:
   speed: 4
   jumpHeight: 2
   timeToJump: 0.4
+--- !u!114 &2042800637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2042800632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 077b3134f9d6d684eb83bdb2d9f0dba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054740266
 GameObject:
   m_ObjectHideFlags: 0

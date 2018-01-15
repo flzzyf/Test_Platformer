@@ -47,15 +47,9 @@ public class PlayerControl : MonoBehaviour {
         {
             //float directionH = Mathf.Sign(inputH);
 
-            if(inputH > 0)
-            {
-                sprite.flipX = false;
-            }
-            else
-            {
-                sprite.flipX = true;
+            if (Mathf.Sign(inputH) != transform.localScale.x)
+                Flip();
 
-            }
         }
 
         //上下方有物体时重置y速度
@@ -93,6 +87,13 @@ public class PlayerControl : MonoBehaviour {
         //特殊跳跃机制
         GravityJump();
 
+    }
+
+    void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
     //根据跳跃高度和时间计算重力和速度

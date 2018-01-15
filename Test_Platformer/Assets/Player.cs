@@ -6,9 +6,9 @@ public class Player : MonoBehaviour {
     Animator animator;
     GameObject gfx;
 
-    public float radius = 2f;
-
     public float exlpodeForce = 5;
+
+    public Collider2D connonCollider;
 
     void Start()
     {
@@ -18,33 +18,28 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
-
-
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("qwe");
             animator.Play("Pinkie_Attack");
 
             StartCoroutine(PinkieAttack());
         }
 	}
-
+    //攻击
     IEnumerator PinkieAttack()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.7f);
         Explode();
     }
-
+    //施加力
     void Explode()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
-
-        foreach (Collider2D item in colliders)
+        foreach (GameObject item in list)
         {
-            AddExpolsionForce(item.gameObject);
+            AddExpolsionForce(item);
         }
     }
-
+    //施加爆炸斥力
     void AddExpolsionForce(GameObject _target)
     {
         Rigidbody2D rb = _target.GetComponent<Rigidbody2D>();
@@ -54,4 +49,17 @@ public class Player : MonoBehaviour {
             rb.AddForce((Vector2)(_target.transform.position - transform.position) * exlpodeForce, ForceMode2D.Impulse);
         }
     }
+
+    #region 攻击列表
+    List<GameObject> list = new List<GameObject>();
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        list.Add(collision.gameObject);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        list.Remove(collision.gameObject);
+    }
+#endregion
 }

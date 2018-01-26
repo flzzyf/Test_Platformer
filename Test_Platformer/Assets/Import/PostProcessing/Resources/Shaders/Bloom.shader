@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 //
 Shader "Hidden/Post FX/Bloom"
-{
+{ 
     Properties
     {
         _MainTex ("", 2D) = "" {}

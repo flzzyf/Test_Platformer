@@ -2,7 +2,7 @@ Shader "Hidden/Post FX/Blit"
 {
     Properties
     {
-        _MainTex("Main Texture", 2D) = "white" {}
+        _MainTex("Main Texture", 2D) = "white" {} 
     }
 
     CGINCLUDE

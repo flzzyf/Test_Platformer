@@ -62,14 +62,14 @@ public class PlayerControl : MonoBehaviour {
         if (controller.collisions.below)
         {
             if(animator != null)
-            animator.SetBool("hopping", false);
+            animator.SetBool("jumping", false);
             //跳跃
             if (Input.GetKey(KeyCode.Space))
             {
                 velocity.y = jumpVelocity;
                 if (animator != null)
 
-                    animator.SetBool("hopping", true);
+                    animator.SetBool("jumping", true);
             }
         }
         //计算速度
@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour {
         controller.Move(velocity * Time.deltaTime);
         //行走动画
         if(animator != null)
-            animator.SetFloat("walkSpeed", Mathf.Abs(inputH));
+            animator.SetFloat("speed", Mathf.Abs(inputH));
 
         //特殊跳跃机制
         GravityJump();

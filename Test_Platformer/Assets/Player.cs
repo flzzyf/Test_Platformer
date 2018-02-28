@@ -20,7 +20,9 @@ public class Player : MonoBehaviour {
     void Update () {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            animator.Play("Pinkie_Attack");
+            //animator.Play("Pinkie_Attack");
+
+            animator.SetTrigger("attack");
 
             StartCoroutine(PinkieAttack());
         }

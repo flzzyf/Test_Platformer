@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 
             animator.SetTrigger("attack");
 
-            StartCoroutine(PinkieAttack());
+            //StartCoroutine(PinkieAttack());
         }
 	}
     //攻击
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
         Explode();
     }
     //施加力
-    void Explode()
+    public void Explode()
     {
         foreach (GameObject item in list)
         {

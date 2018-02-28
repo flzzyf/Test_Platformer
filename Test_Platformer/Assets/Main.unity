@@ -5401,6 +5401,7 @@ GameObject:
   - component: {fileID: 763571169}
   - component: {fileID: 763571171}
   - component: {fileID: 763571170}
+  - component: {fileID: 763571172}
   m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
@@ -5482,6 +5483,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &763571172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 763571168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e077bb3d7a790274e9e475d1b00098f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &763748120
 GameObject:
   m_ObjectHideFlags: 0
@@ -10913,11 +10925,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.5603708, y: 0.5653286}
-      - {x: 0.55052394, y: 0.15832919}
-      - {x: 1.8824348, y: 0.008494973}
-      - {x: 1.9690816, y: 0.4875018}
-      - {x: 1.730504, y: 0.9551484}
+    - - {x: 0.13, y: 0.5653286}
+      - {x: 0.13, y: 0.15832919}
+      - {x: 1.14, y: 0.11}
+      - {x: 1.25, y: 0.48}
+      - {x: 1, y: 0.74}
 --- !u!114 &1594920244
 MonoBehaviour:
   m_ObjectHideFlags: 0

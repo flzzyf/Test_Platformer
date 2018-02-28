@@ -12,19 +12,9 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
-    public Texture btnTexture;
 
-    void OnGUI()
+    public void Restart()
     {
-        //带贴图的按钮
-        if (GUI.Button(new Rect(10, 10, 50, 50), btnTexture))
-            Debug.Log("Clicked the button with an image");
-
-        //带文本按钮
-        if (GUI.Button(new Rect(10, 70, 100, 30), "重新开始"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

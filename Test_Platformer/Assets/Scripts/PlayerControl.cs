@@ -63,6 +63,7 @@ public class PlayerControl : MonoBehaviour {
         {
             if(animator != null)
             animator.SetBool("jumping", false);
+            Debug.Log("q");
             //跳跃
             if (Input.GetKey(KeyCode.Space))
             {

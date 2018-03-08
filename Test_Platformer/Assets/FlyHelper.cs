@@ -28,11 +28,6 @@ public class FlyHelper : MonoBehaviour {
 	
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            WingUp();
-
-        }
 
         if(wingCooldownCurrent > 0)
         {

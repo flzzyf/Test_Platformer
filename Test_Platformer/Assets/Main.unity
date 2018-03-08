@@ -11655,6 +11655,7 @@ MonoBehaviour:
   speed: 4
   jumpHeight: 2
   timeToJump: 0.4
+  jumpCountMax: 3
 --- !u!114 &1594920246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14475,6 +14476,7 @@ MonoBehaviour:
   speed: 4
   jumpHeight: 2
   timeToJump: 0.4
+  jumpCountMax: 2
 --- !u!114 &2042800637
 MonoBehaviour:
   m_ObjectHideFlags: 0

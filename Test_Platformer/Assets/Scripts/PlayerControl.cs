@@ -69,7 +69,8 @@ public class PlayerControl : MonoBehaviour {
             OnGround();
         }
 
-        Jump();
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)
+            StartCoroutine(Jump());
 
         //计算速度
         float targetVelocityX = inputH * speed;
@@ -119,6 +120,9 @@ public class PlayerControl : MonoBehaviour {
 
     void OnGround()
     {
+        Debug.Log(jumpCount);
+
+
         jumpCount = jumpCountMax;
 
         if (animator != null)
@@ -126,20 +130,21 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-    void Jump()
+    IEnumerator Jump()
     {
         //跳跃
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)
+        jumpCount--;
+
+
+        velocity.y = jumpVelocity;
+        if (animator != null)
         {
-            jumpCount--;
+            animator.SetBool("jumping", false);
+            yield return new WaitForSeconds(Time.deltaTime);
+            animator.SetBool("jumping", true);
 
-            Debug.Log(jumpCount);
-
-            velocity.y = jumpVelocity;
-            if (animator != null)
-
-                animator.SetBool("jumping", true);
         }
+
     }
 
 }

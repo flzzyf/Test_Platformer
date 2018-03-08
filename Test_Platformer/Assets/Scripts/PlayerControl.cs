@@ -40,6 +40,11 @@ public class PlayerControl : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (Input.GetKey(KeyCode.F))
+        {
+            return;
+        }
+
         float inputH = Input.GetAxisRaw("Horizontal");
         //float inputV = Input.GetAxisRaw("Vertical");
 
@@ -63,7 +68,6 @@ public class PlayerControl : MonoBehaviour {
         {
             if(animator != null)
             animator.SetBool("jumping", false);
-            Debug.Log("q");
             //跳跃
             if (Input.GetKey(KeyCode.Space))
             {

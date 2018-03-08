@@ -66,17 +66,11 @@ public class PlayerControl : MonoBehaviour {
         //接触地面
         if (controller.collisions.below)
         {
-            if(animator != null)
-            animator.SetBool("jumping", false);
-            //跳跃
-            if (Input.GetKey(KeyCode.Space))
-            {
-                velocity.y = jumpVelocity;
-                if (animator != null)
-
-                    animator.SetBool("jumping", true);
-            }
+            OnGround();
         }
+
+        Jump();
+
         //计算速度
         float targetVelocityX = inputH * speed;
         velocity.y += gravity * Time.deltaTime;
@@ -91,6 +85,7 @@ public class PlayerControl : MonoBehaviour {
 
         //特殊跳跃机制
         GravityJump();
+
 
     }
 
@@ -109,6 +104,9 @@ public class PlayerControl : MonoBehaviour {
         jumpVelocity = Mathf.Abs(gravity) * timeToJump;
     }
 
+    public int jumpCountMax = 2;
+    int jumpCount;
+
     //特殊跳跃机制
     void GravityJump()
     {
@@ -116,6 +114,31 @@ public class PlayerControl : MonoBehaviour {
         {
             //在上升中没按着跳跃键，则附加重力加速落地
             velocity += Vector3.up * gravity * Time.deltaTime;
+        }
+    }
+
+    void OnGround()
+    {
+        jumpCount = jumpCountMax;
+
+        if (animator != null)
+            animator.SetBool("jumping", false);
+
+    }
+
+    void Jump()
+    {
+        //跳跃
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)
+        {
+            jumpCount--;
+
+            Debug.Log(jumpCount);
+
+            velocity.y = jumpVelocity;
+            if (animator != null)
+
+                animator.SetBool("jumping", true);
         }
     }
 

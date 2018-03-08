@@ -52,7 +52,6 @@ public class FlyHelper : MonoBehaviour {
             followDistanceX = 0;
 
         }
-        Debug.Log(inputV);
 
         if (Input.GetKey(KeyCode.F))
         {

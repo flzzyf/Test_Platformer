@@ -58,7 +58,7 @@ public class FlyHelper : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.F))
         {
-
+            target = GameObject.Find("Girl").transform;
         }
 
     }

@@ -120,8 +120,6 @@ public class PlayerControl : MonoBehaviour {
 
     void OnGround()
     {
-        Debug.Log(jumpCount);
-
 
         jumpCount = jumpCountMax;
 

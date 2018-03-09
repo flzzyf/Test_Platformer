@@ -1134,7 +1134,7 @@ MonoBehaviour:
   wingCooldown: 0.1
   targetPoint: {x: 0, y: 0}
   target: {fileID: 1594920248}
-  flyHeightOffset: 0
+  flyHeightOffset: 0.75
   followDistanceX: 1
 --- !u!4 &106926445
 Transform:
@@ -11625,9 +11625,9 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.13, y: 0.5653286}
       - {x: 0.13, y: 0.15832919}
-      - {x: 1.14, y: 0.11}
-      - {x: 1.25, y: 0.48}
-      - {x: 1, y: 0.74}
+      - {x: 0.66, y: 0.21}
+      - {x: 0.76, y: 0.48}
+      - {x: 0.66, y: 0.62}
 --- !u!114 &1594920244
 MonoBehaviour:
   m_ObjectHideFlags: 0

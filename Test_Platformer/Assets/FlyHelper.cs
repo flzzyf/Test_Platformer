@@ -87,7 +87,8 @@ public class FlyHelper : MonoBehaviour {
         }
 
         //高度控制
-        if (transform.position.y < targetPoint.y + flyHeightOffset)
+        if ((transform.position.y < targetPoint.y + flyHeightOffset && target != null)
+            || (transform.position.y < targetPoint.y && target == null))
         {
             if (wingCooldownCurrent <= 0)
             {

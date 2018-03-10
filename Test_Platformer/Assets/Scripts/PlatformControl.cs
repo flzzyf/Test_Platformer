@@ -8,6 +8,10 @@ public class PlatformControl : RaycastControl {
 
     public LayerMask layer_passenger;
 
+    List<PassengerMovement> passengerMovements;
+
+    Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
+
     public override void Start()
     {
         base.Start();
@@ -20,13 +24,33 @@ public class PlatformControl : RaycastControl {
 
         Vector3 velocity = move * Time.deltaTime;
 
-        MovePassengers(velocity);
-        transform.Translate(velocity);
+        CalculatePassengerMovement(velocity);
 
+        MovePassengers(true);
+        transform.Translate(velocity);
+        MovePassengers(false);
     }
 
-    void MovePassengers(Vector3 _velocity)
+    void MovePassengers(bool _beforeMovePlatform)
     {
+        foreach (PassengerMovement pm in passengerMovements)
+        {
+            if (!passengerDictionary.ContainsKey(pm.transform))
+            {
+                passengerDictionary.Add(pm.transform, pm.transform.GetComponent<Controller2D>());
+            }
+
+            if(pm.moveBeforePlatform == _beforeMovePlatform)
+            {
+                passengerDictionary[pm.transform].Move(pm.velocity, pm.standingOnPlatform);
+            }
+        }
+    }
+
+    void CalculatePassengerMovement(Vector3 _velocity)
+    {
+        passengerMovements = new List<PassengerMovement>();
+
         HashSet<Transform> passengers = new HashSet<Transform>();
 
         float directionX = Mathf.Sign(_velocity.x);
@@ -59,7 +83,7 @@ public class PlatformControl : RaycastControl {
                         float pushX = (directionY == 1) ? _velocity.x : 0;
                         float pushY = _velocity.y - (hit.distance - skinWidth) * directionY;
 
-                        hit.transform.Translate(new Vector3(pushX, pushY));
+                        passengerMovements.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), directionY == 1, true));
                     }
                 }
             }
@@ -84,16 +108,16 @@ public class PlatformControl : RaycastControl {
                     {
                         passengers.Add(hit.transform);
 
-                        //如果在上升
                         float pushX = _velocity.x - (hit.distance - skinWidth) * directionX;
-                        float pushY = 0;
+                        float pushY = -skinWidth;
 
-                        hit.transform.Translate(new Vector3(pushX, pushY));
+                        passengerMovements.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), false, true));
+
                     }
                 }
             }
         }
-
+        //平台在向下或水平移动
         if(directionY == -1 || (_velocity.y == 0 && _velocity.x != 0))
         {
             //光束长度
@@ -118,11 +142,28 @@ public class PlatformControl : RaycastControl {
                         float pushX = _velocity.x;
                         float pushY = _velocity.y;
 
-                        hit.transform.Translate(new Vector3(pushX, pushY));
+                        passengerMovements.Add(new PassengerMovement(hit.transform, new Vector3(pushX, pushY), true, false));
+
                     }
                 }
             }
         }
     }
+
+    struct PassengerMovement {
+        public Transform transform;
+        public Vector3 velocity;
+        public bool standingOnPlatform;
+        public bool moveBeforePlatform;
+
+        public PassengerMovement(Transform _transform, Vector3 _velocity, bool _standingOnPlatform, bool _moveBeforePlatform)
+        {
+            transform = _transform;
+            velocity = _velocity;
+            standingOnPlatform = _standingOnPlatform;
+            moveBeforePlatform = _moveBeforePlatform;
+        }
+    }
+
 
 }

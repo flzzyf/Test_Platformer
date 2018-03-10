@@ -2,21 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class AnimationEvent : MonoBehaviour {
 
     public void meg()
     {
-        Debug.Log("meg");
+        //Debug.Log("meg");
 
         transform.parent.gameObject.GetComponent<Player>().Explode();
     }

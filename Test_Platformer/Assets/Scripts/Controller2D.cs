@@ -18,7 +18,7 @@ public class Controller2D : RaycastControl {
     }
 
     //移动
-    public void Move(Vector3 _velocity)
+    public void Move(Vector3 _velocity, bool _standingOnPlatform = false)
     {
         //更新四个方向的光束源点
         UpdateRaycastOrigins();
@@ -37,6 +37,9 @@ public class Controller2D : RaycastControl {
             VerticalCollisions(ref _velocity);
         //移动
         transform.Translate(_velocity);
+
+        if(_standingOnPlatform)
+            collisions.below = _standingOnPlatform;
 
         //print(collisions.below);
     }
@@ -59,6 +62,9 @@ public class Controller2D : RaycastControl {
             //碰到物体
             if (hit)
             {
+                if (hit.distance == 0)
+                    continue;
+
                 //坡角度
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxClambAngle)

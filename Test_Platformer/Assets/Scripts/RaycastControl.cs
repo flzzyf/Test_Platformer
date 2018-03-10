@@ -14,7 +14,7 @@ public class RaycastControl : MonoBehaviour {
     protected float horizontalRaySpacing;
     protected float verticalRaySpacing;
 
-    new BoxCollider2D collider;
+    BoxCollider2D collider;
     public LayerMask collisionMask;
 
     protected RaycastOrigin raycastOrigin;

@@ -133,7 +133,6 @@ public class PlayerControl : MonoBehaviour {
         //跳跃
         jumpCount--;
 
-
         velocity.y = jumpVelocity;
         if (animator != null)
         {

@@ -65,6 +65,7 @@ public class Controller2D : RaycastControl {
                 if (hit.distance == 0)
                     continue;
 
+
                 //坡角度
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxClambAngle)
@@ -127,6 +128,7 @@ public class Controller2D : RaycastControl {
             //有障碍物
             if (hit)
             {
+
                 //当距离为0时速度也为0
                 _velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;

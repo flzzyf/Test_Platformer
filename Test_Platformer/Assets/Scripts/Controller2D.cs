@@ -15,6 +15,7 @@ public class Controller2D : RaycastControl {
     {
         base.Start();
 
+        collisions.facing = 1;
     }
 
     //移动
@@ -26,12 +27,17 @@ public class Controller2D : RaycastControl {
         collisions.Reset();
         //之前速度
         collisions.velocityOld = _velocity;
+
+        if(_velocity.x != 0)
+        {
+            collisions.facing = (int)Mathf.Sign(_velocity.x);
+        }
+
         //下坡
         if (_velocity.y < 0)
             DescendSlope(ref _velocity);
         //水平碰撞判定
-        if (_velocity.x != 0)
-            HorizontalCollisions(ref _velocity);
+        HorizontalCollisions(ref _velocity);
         //垂直碰撞判定
         if (_velocity.y != 0)
             VerticalCollisions(ref _velocity);
@@ -47,9 +53,14 @@ public class Controller2D : RaycastControl {
     void HorizontalCollisions(ref Vector3 _velocity)
     {
         //速度正负方向
-        float directionX = Mathf.Sign(_velocity.x);
+        float directionX = collisions.facing;
         //光束长度
         float rayLength = Mathf.Abs(_velocity.x) + skinWidth;
+
+        if(Mathf.Abs(_velocity.x) < skinWidth)
+        {
+            rayLength = 2 * skinWidth;  //刚好能检测到相邻物体的距离
+        }
 
         for (int i = 0; i < horizontalRayCount; i++)
         {
@@ -215,6 +226,8 @@ public class Controller2D : RaycastControl {
         public float slopeAngle, slopeAngleOld;
 
         public Vector3 velocityOld;
+
+        public int facing;  //人物朝向，0左1右
 
         public void Reset()
         {

@@ -227,7 +227,7 @@ public class Controller2D : RaycastControl {
 
         public Vector3 velocityOld;
 
-        public int facing;  //人物朝向，0左1右
+        public int facing;  //人物朝向，-1左1右
 
         public void Reset()
         {

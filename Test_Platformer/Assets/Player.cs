@@ -20,19 +20,10 @@ public class Player : MonoBehaviour {
     void Update () {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            //animator.Play("Pinkie_Attack");
-
             animator.SetTrigger("attack");
-
-            //StartCoroutine(PinkieAttack());
         }
 	}
-    //攻击
-    IEnumerator PinkieAttack()
-    {
-        yield return new WaitForSeconds(0.7f);
-        Explode();
-    }
+
     //施加力
     public void Explode()
     {

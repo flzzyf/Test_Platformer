@@ -37,6 +37,9 @@ public class PlayerControl : MonoBehaviour {
     public float wallStickTime = .25f;
     float timeToWallUnstick;
 
+    public int jumpCountMax = 2;
+    int jumpCount;
+
     void Start () {
         controller = GetComponent<Controller2D>();
         gfx = GameObject.Find("GFX");
@@ -45,6 +48,8 @@ public class PlayerControl : MonoBehaviour {
         animator = gfx.GetComponent<Animator>();
 
         CalculateGravityAndJumpVelocity();
+
+        jumpCount = jumpCountMax;
 
 	}
 
@@ -56,6 +61,7 @@ public class PlayerControl : MonoBehaviour {
         }
 
         float inputH = Input.GetAxisRaw("Horizontal");
+
         //float inputV = Input.GetAxisRaw("Vertical");
 
         float targetVelocityX = inputH * speed;
@@ -69,13 +75,14 @@ public class PlayerControl : MonoBehaviour {
 
         }
 
-
         int wallDir = (controller.collisions.left) ? -1 : 1;
 
         bool wallSliding = false;
         if((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
         {
             wallSliding = true;
+
+            jumpCount = jumpCountMax;
 
             if (velocity.y < -wallSlideSpeedMax)
                 velocity.y = -wallSlideSpeedMax;
@@ -104,7 +111,7 @@ public class PlayerControl : MonoBehaviour {
         animator.SetBool("climbing", wallSliding);
 
         //上下方有物体时重置y速度
-            if (controller.collisions.above || controller.collisions.below)
+        if (controller.collisions.above || controller.collisions.below)
         {
             velocity.y = 0;
         }
@@ -115,13 +122,11 @@ public class PlayerControl : MonoBehaviour {
             OnGround();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))    //按空格
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)    //按空格
         {
-            Debug.Log("Space");
-            if (jumpCount > 0)
-            {
+            //Debug.Log("Space");
+            jumpCount--;
 
-            }
             if (wallSliding)
             {
                 if (wallDir == inputH)  //按朝着墙的方向
@@ -144,20 +149,18 @@ public class PlayerControl : MonoBehaviour {
                 }
 
             }
-            if (controller.collisions.below)
+            else
             {
                 velocity.y = jumpVelocity;
                 StartCoroutine(Jump(velocity));
-
             }
+
         }
 
-        //计算速度
-
+        //计算重力速度
         velocity.y += gravity * Time.deltaTime;
 
         //移动
-        controller.Move(velocity * Time.deltaTime);
         //行走动画
         if(animator != null)
             animator.SetFloat("speed", Mathf.Abs(inputH));
@@ -165,6 +168,18 @@ public class PlayerControl : MonoBehaviour {
         //特殊跳跃机制
         GravityJump();
 
+        if (!controller.collisions.below && !wallSliding && !animator.GetBool("jumping")) 
+        {
+            Debug.Log("自然掉落");
+            animator.SetBool("jumping", true);
+        }
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        controller.Move(velocity * Time.deltaTime);
 
     }
 
@@ -183,8 +198,7 @@ public class PlayerControl : MonoBehaviour {
         jumpVelocity = Mathf.Abs(gravity) * timeToJump;
     }
 
-    public int jumpCountMax = 2;
-    int jumpCount;
+
 
     //特殊跳跃机制
     void GravityJump()
@@ -198,7 +212,6 @@ public class PlayerControl : MonoBehaviour {
 
     void OnGround()
     {
-
         jumpCount = jumpCountMax;
 
         if (animator != null)

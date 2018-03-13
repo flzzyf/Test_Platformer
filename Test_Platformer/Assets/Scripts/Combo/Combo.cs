@@ -7,4 +7,6 @@ public class Combo{
 
     public ComboAction[] action = new ComboAction[1];
 
+    public string animStatusName;
+
 }

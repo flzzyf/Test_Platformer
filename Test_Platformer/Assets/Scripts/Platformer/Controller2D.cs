@@ -41,13 +41,14 @@ public class Controller2D : RaycastControl {
         //垂直碰撞判定
         if (_velocity.y != 0)
             VerticalCollisions(ref _velocity);
+        else
+            collisions.below = true;
         //移动
         transform.Translate(_velocity);
 
         if(_standingOnPlatform)
             collisions.below = _standingOnPlatform;
 
-        //print(collisions.below);
     }
     //水平碰撞判定
     void HorizontalCollisions(ref Vector3 _velocity)

@@ -11,6 +11,4 @@ public class ComboAction {
 
     public KeyCode key;
 
-    public float delayTime = 0.3f;
-
 }

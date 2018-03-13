@@ -39,14 +39,13 @@ public class ComboControl : MonoBehaviour {
                 Debug.Log("清零");
 
                 SetComboStatus(i, 0);
-
             }
 
-            if (Input.GetKeyDown(combo[i].action[comboStatusCounter[i]].key))
+            if (comboStatusCounter[i] < combo[i].action.Length) //未完成连击所有动作
             {
-                if (comboStatusCounter[i] == 0 || animState.normalizedTime > 0.1f)
+                if (Input.GetKeyDown(combo[i].action[comboStatusCounter[i]].key))
                 {
-                    if (comboStatusCounter[i] < combo[i].action.Length) //未完成连击所有动作
+                    if (comboStatusCounter[i] == 0 || animState.normalizedTime > 0.1f)
                     {
                         comboStatusCounter[i]++;
 
@@ -54,13 +53,7 @@ public class ComboControl : MonoBehaviour {
 
                         SetComboStatus(i, comboStatusCounter[i]);
                     }
-                    else
-                    {
-                        print("结束连招");
-                        SetComboStatus(i, 0);
-
-                    }
-                }
+                 }
             }
         }
     }

@@ -1,47 +1,32 @@
 fileFormatVersion: 2
-guid: 9a87a68799a249145b2f55ab6fbd299a
-timeCreated: 1520859751
+guid: cbc021b2ce47a0c4fadefd1aba060ea4
+timeCreated: 1520944963
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Girl_Combo_0
-    21300002: Girl_Combo_1
-    21300004: Girl_Combo_2
-    21300006: Girl_Combo_3
-    21300008: Girl_Combo_4
-    21300010: Girl_Combo_5
-    21300012: Girl_Combo_6
-    21300014: Girl_Combo_7
-    21300016: Girl_Combo_8
-    21300018: Girl_Combo_9
-    21300020: Girl_Combo_10
-    21300022: Girl_Combo_11
-    21300024: Girl_Combo_12
-    21300026: Girl_Combo_13
-    21300028: Girl_Combo_14
-    21300030: Girl_Combo_15
-    21300032: Girl_Combo_16
-    21300034: Girl_Combo_17
-    21300036: Girl_Combo_18
-    21300038: Girl_Combo_ZZZ_0
-    21300040: Girl_Combo_ZZZ_1
-    21300042: Girl_Combo_ZZZ_2
-    21300044: Girl_Combo_ZZZ_3
-    21300046: Girl_Combo_ZZZ_4
-    21300048: Girl_Combo_ZZZ_5
-    21300050: Girl_Combo_ZZZ_6
-    21300052: Girl_Combo_ZZZ_7
-    21300054: Girl_Combo_ZZZ_8
-    21300056: Girl_Combo_ZZZ_9
-    21300058: Girl_Combo_ZZZ_10
-    21300060: Girl_Combo_ZZZ_11
-    21300062: Girl_Combo_ZZZ_12
-    21300064: Girl_Combo_ZZZ_13
-    21300066: Girl_Combo_ZZZ_14
-    21300068: Girl_Combo_ZZZ_15
-    21300070: Girl_Combo_ZZZ_16
-    21300072: Girl_Combo_ZZZ_17
-    21300074: Girl_Combo_ZZZ_18
+    21300000: Girl_Combo_ZZZ_0
+    21300002: Girl_Combo_ZZZ_1
+    21300004: Girl_Combo_ZZZ_2
+    21300006: Girl_Combo_ZZZ_3
+    21300008: Girl_Combo_ZZZ_4
+    21300010: Girl_Combo_ZZZ_5
+    21300012: Girl_Combo_ZZZ_6
+    21300014: Girl_Combo_ZZZ_7
+    21300016: Girl_Combo_ZZZ_8
+    21300018: Girl_Combo_ZZZ_9
+    21300020: Girl_Combo_ZZZ_10
+    21300022: Girl_Combo_ZZZ_11
+    21300024: Girl_Combo_ZZZ_12
+    21300026: Girl_Combo_ZZZ_13
+    21300028: Girl_Combo_ZZZ_14
+    21300030: Girl_Combo_ZZZ_15
+    21300032: Girl_Combo_ZZZ_16
+    21300034: Girl_Combo_ZZZ_17
+    21300036: Girl_Combo_ZZZ_18
+    21300038: Girl_Combo_ZZZ_19
+    21300040: Girl_Combo_ZZZ_20
+    21300042: Girl_Combo_ZZZ_21
+    21300044: Girl_Combo_ZZZ_22
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -384,6 +369,62 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2700
+        y: 0
+        width: 150
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Girl_Combo_ZZZ_19
+      rect:
+        serializedVersion: 2
+        x: 2850
+        y: 0
+        width: 150
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Girl_Combo_ZZZ_20
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0
+        width: 150
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Girl_Combo_ZZZ_21
+      rect:
+        serializedVersion: 2
+        x: 3150
+        y: 0
+        width: 150
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Girl_Combo_ZZZ_22
+      rect:
+        serializedVersion: 2
+        x: 3300
         y: 0
         width: 150
         height: 100

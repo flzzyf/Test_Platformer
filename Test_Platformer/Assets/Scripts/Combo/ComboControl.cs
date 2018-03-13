@@ -36,7 +36,7 @@ public class ComboControl : MonoBehaviour {
         {
             if (comboStatusCounter[i] > 0 && animState.normalizedTime >= 0.9f)
             {
-                Debug.Log("清零");
+                //Debug.Log("清零");
 
                 SetComboStatus(i, 0);
             }
@@ -49,7 +49,7 @@ public class ComboControl : MonoBehaviour {
                     {
                         comboStatusCounter[i]++;
 
-                        print(comboStatusCounter[i]);
+                        //print(comboStatusCounter[i]);
 
                         SetComboStatus(i, comboStatusCounter[i]);
                     }
@@ -63,8 +63,6 @@ public class ComboControl : MonoBehaviour {
         comboStatusCounter[_index] = _status;
 
         animator.SetInteger(combo[_index].animStatusName, _status);
-
-        //print("" + _index + _status);
 
     }
 

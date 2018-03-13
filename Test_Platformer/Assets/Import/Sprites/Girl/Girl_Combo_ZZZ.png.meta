@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9a87a68799a249145b2f55ab6fbd299a
-timeCreated: 1520825515
+timeCreated: 1520859751
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,6 +23,25 @@ TextureImporter:
     21300032: Girl_Combo_16
     21300034: Girl_Combo_17
     21300036: Girl_Combo_18
+    21300038: Girl_Combo_ZZZ_0
+    21300040: Girl_Combo_ZZZ_1
+    21300042: Girl_Combo_ZZZ_2
+    21300044: Girl_Combo_ZZZ_3
+    21300046: Girl_Combo_ZZZ_4
+    21300048: Girl_Combo_ZZZ_5
+    21300050: Girl_Combo_ZZZ_6
+    21300052: Girl_Combo_ZZZ_7
+    21300054: Girl_Combo_ZZZ_8
+    21300056: Girl_Combo_ZZZ_9
+    21300058: Girl_Combo_ZZZ_10
+    21300060: Girl_Combo_ZZZ_11
+    21300062: Girl_Combo_ZZZ_12
+    21300064: Girl_Combo_ZZZ_13
+    21300066: Girl_Combo_ZZZ_14
+    21300068: Girl_Combo_ZZZ_15
+    21300070: Girl_Combo_ZZZ_16
+    21300072: Girl_Combo_ZZZ_17
+    21300074: Girl_Combo_ZZZ_18
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -76,7 +95,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -86,7 +105,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -96,7 +115,7 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - buildTarget: WebGL
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -109,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Girl_Combo_0
+      name: Girl_Combo_ZZZ_0
       rect:
         serializedVersion: 2
         x: 0
@@ -123,7 +142,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_1
+      name: Girl_Combo_ZZZ_1
       rect:
         serializedVersion: 2
         x: 150
@@ -137,7 +156,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_2
+      name: Girl_Combo_ZZZ_2
       rect:
         serializedVersion: 2
         x: 300
@@ -151,7 +170,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_3
+      name: Girl_Combo_ZZZ_3
       rect:
         serializedVersion: 2
         x: 450
@@ -165,7 +184,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_4
+      name: Girl_Combo_ZZZ_4
       rect:
         serializedVersion: 2
         x: 600
@@ -179,7 +198,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_5
+      name: Girl_Combo_ZZZ_5
       rect:
         serializedVersion: 2
         x: 750
@@ -193,7 +212,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_6
+      name: Girl_Combo_ZZZ_6
       rect:
         serializedVersion: 2
         x: 900
@@ -207,7 +226,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_7
+      name: Girl_Combo_ZZZ_7
       rect:
         serializedVersion: 2
         x: 1050
@@ -221,7 +240,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_8
+      name: Girl_Combo_ZZZ_8
       rect:
         serializedVersion: 2
         x: 1200
@@ -235,7 +254,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_9
+      name: Girl_Combo_ZZZ_9
       rect:
         serializedVersion: 2
         x: 1350
@@ -249,7 +268,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_10
+      name: Girl_Combo_ZZZ_10
       rect:
         serializedVersion: 2
         x: 1500
@@ -263,7 +282,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_11
+      name: Girl_Combo_ZZZ_11
       rect:
         serializedVersion: 2
         x: 1650
@@ -277,7 +296,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_12
+      name: Girl_Combo_ZZZ_12
       rect:
         serializedVersion: 2
         x: 1800
@@ -291,7 +310,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_13
+      name: Girl_Combo_ZZZ_13
       rect:
         serializedVersion: 2
         x: 1950
@@ -305,7 +324,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_14
+      name: Girl_Combo_ZZZ_14
       rect:
         serializedVersion: 2
         x: 2100
@@ -319,7 +338,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_15
+      name: Girl_Combo_ZZZ_15
       rect:
         serializedVersion: 2
         x: 2250
@@ -333,7 +352,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_16
+      name: Girl_Combo_ZZZ_16
       rect:
         serializedVersion: 2
         x: 2400
@@ -347,7 +366,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_17
+      name: Girl_Combo_ZZZ_17
       rect:
         serializedVersion: 2
         x: 2550
@@ -361,7 +380,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Girl_Combo_18
+      name: Girl_Combo_ZZZ_18
       rect:
         serializedVersion: 2
         x: 2700

@@ -12287,6 +12287,7 @@ GameObject:
   - component: {fileID: 1594920245}
   - component: {fileID: 1594920244}
   - component: {fileID: 1594920243}
+  - component: {fileID: 1594920249}
   m_Layer: 8
   m_Name: Girl
   m_TagString: Untagged
@@ -12351,7 +12352,7 @@ MonoBehaviour:
   jumpHeight: 2
   timeToJump: 0.4
   wallSlideSpeedMax: 1
-  wallJumpClimb: {x: 3, y: 13}
+  wallJumpClimb: {x: 2, y: 13}
   wallJumpOff: {x: 5, y: 5}
   wallLeap: {x: 10, y: 8}
   wallStickTime: 0.25
@@ -12406,7 +12407,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1594920242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 763571169}
@@ -12414,6 +12415,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1594920249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1594920242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77e4ed4144f9c146b6f214348381eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combo:
+  - action:
+    - effect: {fileID: 0}
+      effectArea: {fileID: 0}
+      key: 0
+      delayTime: 0.3
+  animator: {fileID: 763571170}
 --- !u!1 &1594985940
 GameObject:
   m_ObjectHideFlags: 0
@@ -14794,7 +14813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1887675626
 MonoBehaviour:
   m_ObjectHideFlags: 0

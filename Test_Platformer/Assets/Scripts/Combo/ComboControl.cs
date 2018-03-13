@@ -11,9 +11,11 @@ public class ComboControl : MonoBehaviour {
     //连招计数器
     Dictionary<int, int> counter = new Dictionary<int, int>();
 
-    Dictionary<int, string> info = new Dictionary<int, string>();
+    AnimatorStateInfo animState;
 
-    public Text infoText;
+    public Animator animator;
+
+    int comboStatus = 0;
 
     private void Start()
     {
@@ -22,21 +24,19 @@ public class ComboControl : MonoBehaviour {
         {
             timer[i] = 0;
             counter[i] = 0;
-            info[i] = "";
         }
+
     }
 
     void Update()
     {
+        /*
         for (int i = 0; i < combo.Length; i++)
         {
             //按键判定
-            if (Input.GetKeyDown(combo[i].action.key[counter[i]]))
+            if (Input.GetKeyDown(combo[i].action[counter[i]].key))
             {
-                info[i] += combo[i].action.key[counter[i]];
                 counter[i]++;
-                //按键显示
-                infoText.text = "按键输入：" + info[i];
 
                 if (counter[i] == 0)
                 {
@@ -45,10 +45,10 @@ public class ComboControl : MonoBehaviour {
                 }
                 else
                 {
-                    if(counter[i] == combo[i].action.key.Length)
+                    if(counter[i] == combo[i].action.Length)
                     {
-                        //Debug.Log("触发");
-                        combo[i].effect.Trigger();
+                        Debug.Log("触发");
+                        combo[i].action[counter[i]].effect.Trigger();
                         ComboReset(i);
 
                     }
@@ -62,10 +62,37 @@ public class ComboControl : MonoBehaviour {
             }
 
             //连招超时清零
-            if (counter[i] != 0 && Time.time - timer[i] > combo[i].action.delayTime)
+            if (counter[i] != 0 && Time.time - timer[i] > combo[i].action[counter[i]].delayTime)
                 ComboReset(i);
+        
+        }*/
+
+        animState = animator.GetCurrentAnimatorStateInfo(0);
+
+        if (comboStatus > 0 && animState.normalizedTime >= 0.9f)
+        {
+            Debug.Log("清零");
+
+            comboStatus = 0;
+            animator.SetInteger("combo_ZZZ", 0);
 
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (animState.normalizedTime > 0.3f)
+            {
+                comboStatus++;
+
+                Debug.Log(comboStatus);
+
+                animator.SetInteger("combo_ZZZ", comboStatus);
+
+            }
+        }
+
+ 
+
     }
 
     void ComboReset(int _index)
@@ -73,7 +100,6 @@ public class ComboControl : MonoBehaviour {
         //Debug.Log("清零");
         timer[_index] = 0;
         counter[_index] = 0;
-        info[_index] = "";
     }
 
 }

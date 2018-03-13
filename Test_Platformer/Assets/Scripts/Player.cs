@@ -17,11 +17,13 @@ public class Player : MonoBehaviour {
         animator = gfx.GetComponent<Animator>();
     }
 
-    void Update () {
+    void Update ()
+    {
+        /*
         if (Input.GetKeyDown(KeyCode.Z))
         {
             animator.SetTrigger("attack");
-        }
+        }*/
 	}
 
     //施加力

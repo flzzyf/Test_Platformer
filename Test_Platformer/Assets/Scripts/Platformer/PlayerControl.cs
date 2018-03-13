@@ -96,7 +96,7 @@ public class PlayerControl : MonoBehaviour {
                 {
                     timeToWallUnstick -= Time.deltaTime;
 
-                    Debug.Log(timeToWallUnstick);
+                    //Debug.Log(timeToWallUnstick);
                 }
                 else
                 {

@@ -30,11 +30,11 @@ public class ComboControl : MonoBehaviour {
 
         float animPercent = (animState.normalizedTime % animState.length) / animState.length;
 
-        print("动画百分比：" + animPercent);
+        //print("动画百分比：" + animPercent);
 
         for (int i = 0; i < combo.Length; i++)
         {
-            if (comboStatusCounter[i] > 0 && animPercent >= 0.9f)
+            if (comboStatusCounter[i] > 0 && animState.normalizedTime >= 0.9f)
             {
                 Debug.Log("清零");
 
@@ -44,34 +44,25 @@ public class ComboControl : MonoBehaviour {
 
             if (Input.GetKeyDown(combo[i].action[comboStatusCounter[i]].key))
             {
-                print("key");
-
-                if (comboStatusCounter[i] == 0 || animPercent > 0.3f)
+                if (comboStatusCounter[i] == 0 || animState.normalizedTime > 0.1f)
                 {
-                    print("key2");
-
-                    comboStatusCounter[i]++;
-
-                    if (comboStatusCounter[i] < combo[0].action.Length) //未完成连击所有动作
+                    if (comboStatusCounter[i] < combo[i].action.Length) //未完成连击所有动作
                     {
+                        comboStatusCounter[i]++;
 
-                        //print(comboStatusCounter[i]);
+                        print(comboStatusCounter[i]);
 
                         SetComboStatus(i, comboStatusCounter[i]);
                     }
                     else
                     {
+                        print("结束连招");
                         SetComboStatus(i, 0);
 
                     }
-
                 }
-
             }
-
-
         }
-
     }
 
     void SetComboStatus(int _index, int _status)

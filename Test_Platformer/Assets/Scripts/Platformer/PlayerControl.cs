@@ -108,7 +108,7 @@ public class PlayerControl : MonoBehaviour {
                 timeToWallUnstick = wallStickTime;
             }
         }
-        animator.SetBool("climbing", wallSliding);
+        animator.SetBool("sliding", wallSliding);
 
         //上下方有物体时重置y速度
         if (controller.collisions.above || controller.collisions.below)

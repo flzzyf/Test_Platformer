@@ -64,6 +64,8 @@ public class Controller2D : RaycastControl {
 
     public void PreMove(float _inputH, bool _standingOnPlatform = false)
     {
+
+
         float targetVelocityX = _inputH * unit.speed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
             (collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
@@ -159,7 +161,7 @@ public class Controller2D : RaycastControl {
         //移动
         transform.Translate(_velocity);
 
-        if(_standingOnPlatform)
+        if (_standingOnPlatform)
             collisions.below = _standingOnPlatform;
 
     }
@@ -254,6 +256,8 @@ public class Controller2D : RaycastControl {
                         _velocity.x -= distanceToSlopeStart * directionX;
                     }
                     //爬坡
+                    print("1");
+
                     ClampSlope(ref _velocity, slopeAngle);
                     _velocity.x += distanceToSlopeStart * directionX;
                 }

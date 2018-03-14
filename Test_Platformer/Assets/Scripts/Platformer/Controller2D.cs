@@ -75,6 +75,7 @@ public class Controller2D : RaycastControl {
             wallSliding = false;
             if ((collisions.left || collisions.right) && !collisions.below && velocity.y < 0)
             {
+                print("sliding");
                 wallSliding = true;
 
                 jumpCount = unit.jumpCountMax;

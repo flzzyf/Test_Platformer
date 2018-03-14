@@ -14,6 +14,8 @@ public class PlayerControl : MonoBehaviour {
 
     float inputH;
 
+    public Collider2D collider;
+
     void Start () {
         controller = GetComponent<Controller2D>();
         sprite = gfx.GetComponent<SpriteRenderer>();
@@ -118,26 +120,29 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
-    int counter = 0;
-
-    public void Girl_Combo_ZZZ()
+    public void Girl_Combo_ZZZ(int _index)
     {
         ComboControl comboControl = GetComponent<ComboControl>();
 
-        print(counter);
+        comboControl.combo[0].action[_index].effect.target = gameObject;
+        comboControl.combo[0].action[_index].effect.Trigger();
 
-        if (counter < 3)
+        foreach (GameObject item in list)
         {
-
-            //comboControl.combo[0].action[counter].effect.Trigger();
-
-            counter++;
-
+            print(item.name);
+            item.GetComponent<Rigidbody2D>().AddForce(transform.right * 3, ForceMode2D.Impulse);
 
         }
-        else
-            counter = 0;
+    }
 
+    List<GameObject> list = new List<GameObject>();
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        list.Add(collision.gameObject);
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        list.Remove(collision.gameObject);
     }
 }

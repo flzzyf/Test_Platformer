@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour {
 
-    bool cannotControl;
+    public float speed = 3;
+
+    public int jumpCountMax = 2;
+
+    bool uncontrolable;
 
 	void Start () {
 		

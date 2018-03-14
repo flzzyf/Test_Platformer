@@ -14,18 +14,119 @@ public class Controller2D : RaycastControl {
     Vector3 velocity;
     Vector3 forceVelocity;
 
+    Unit unit;
+
+    //空中地上加速度
+    float accelerationTimeAirborne = .2f;
+    float accelerationTimeGrounded = .1f;
+
+    float velocityXSmoothing;
+
+    //滑墙相关
+    public bool canSlideWall;
+
+    public float wallSlideSpeedMax = 1;
+
+    public Vector2 wallJumpClimb;
+    public Vector2 wallJumpOff;
+    public Vector2 wallLeap;
+
+    public float wallStickTime = .25f;
+    float timeToWallUnstick;
+
+    int jumpCount;
+
+    public bool wallSliding;
+
+    float jumpVelocity;
+
+    //跳跃高度和跳跃时间
+    public float jumpHeight = 4;
+    public float timeToJump = .4f;
+    float gravity;
+
+    float jumpForce;
+
     public override void Start()
     {
         base.Start();
 
+        unit = GetComponent<Unit>();
+
         collisions.facing = 1;
+
+        jumpCount = unit.jumpCountMax;
+
+        CalculateGravityAndJumpVelocity();
+
+
     }
 
-    public void PreMove(Vector3 _velocity, bool _standingOnPlatform = false)
+    public void PreMove(float _inputH, bool _standingOnPlatform = false)
     {
-        velocity = _velocity;
+        float targetVelocityX = _inputH * unit.speed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
+            (collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+        if(canSlideWall)
+        {
+            int wallDir = (collisions.left) ? -1 : 1;
+
+            wallSliding = false;
+            if ((collisions.left || collisions.right) && !collisions.below && velocity.y < 0)
+            {
+                wallSliding = true;
+
+                jumpCount = unit.jumpCountMax;
+
+                if (velocity.y < -wallSlideSpeedMax)
+                    velocity.y = -wallSlideSpeedMax;
+
+                if (timeToWallUnstick > 0)
+                {
+                    velocityXSmoothing = 0;
+                    velocity.x = 0;
+
+                    if (_inputH != wallDir && _inputH != 0)
+                    {
+                        timeToWallUnstick -= Time.deltaTime;
+
+                    }
+                    else
+                    {
+                        timeToWallUnstick = wallStickTime;
+                    }
+                }
+                else
+                {
+                    timeToWallUnstick = wallStickTime;
+                }
+            }
+        }
+
+        //上下方有物体时重置y速度
+        if (collisions.above || collisions.below)
+        {
+            velocity.y = 0;
+
+            if(collisions.below){
+                jumpCount = unit.jumpCountMax;
+
+            }
+        }
+
+        if (jumpForce != 0){
+            velocity.y += jumpForce;
+            jumpForce = 0;
+        }
+
+        //计算重力速度
+        velocity.y += gravity * Time.deltaTime;
+
+
         velocity += forceVelocity;
         forceVelocity = Vector3.zero;
+
         Move(velocity * Time.deltaTime, _standingOnPlatform);
     }
 
@@ -61,6 +162,52 @@ public class Controller2D : RaycastControl {
             collisions.below = _standingOnPlatform;
 
     }
+
+    public bool Jump()
+    {
+        if (jumpCount > 0)
+        {
+            jumpCount--;
+            print(jumpCount);
+                  
+            float inputH = Input.GetAxisRaw("Horizontal");
+
+            if (wallSliding)
+            {
+                int wallDir = (collisions.left) ? -1 : 1;
+
+                if (wallDir == inputH)  //按朝着墙的方向
+                {
+                    velocity.x = -wallDir * wallJumpClimb.x;
+                    velocity.y = wallJumpClimb.y;
+                }
+                else if (inputH == 0)
+                {  //不按方向键
+                    velocity.x = -wallDir * wallJumpOff.x;
+                    velocity.y = wallJumpOff.y;
+                }
+                else
+                {
+                    //按和墙反方向键
+                    velocity.x = -wallDir * wallLeap.x;
+                    velocity.y = wallLeap.y;
+                }
+
+            }
+            else
+            {
+                //velocity.y = jumpVelocity;
+
+                jumpForce = jumpVelocity;
+            }
+            return true;
+
+        }
+
+        return false;
+
+    }
+
     //水平碰撞判定
     void HorizontalCollisions(ref Vector3 _velocity)
     {
@@ -236,6 +383,16 @@ public class Controller2D : RaycastControl {
         force *= transform.localScale.x;
         forceVelocity = force;
 
+    }
+
+
+
+    //根据跳跃高度和时间计算重力和速度
+    void CalculateGravityAndJumpVelocity()
+    {
+        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJump, 2);
+
+        jumpVelocity = Mathf.Abs(gravity) * timeToJump;
     }
 
     public struct CollisionInfo {

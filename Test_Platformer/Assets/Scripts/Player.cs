@@ -10,6 +10,7 @@ public class Player : Unit {
 
     public Collider2D connonCollider;
 
+
     void Start()
     {
         gfx = GameObject.Find("GFX");

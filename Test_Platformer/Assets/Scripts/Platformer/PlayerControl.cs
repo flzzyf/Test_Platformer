@@ -4,41 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(Controller2D))]
 public class PlayerControl : MonoBehaviour {
-
-    public float speed = 3;
-    //跳跃高度和跳跃时间
-    public float jumpHeight = 4;
-    public float timeToJump = .4f;
     
-    //空中地上加速度
-    float accelerationTimeAirborne = .2f;
-    float accelerationTimeGrounded = .1f;
-
     Controller2D controller;
-
-    float gravity;
-    float jumpVelocity;
-
-    Vector3 velocity;
-
-    float velocityXSmoothing;
 
     Animator animator;
     public GameObject gfx;
 
     SpriteRenderer sprite;
 
-    public float wallSlideSpeedMax = 1;
-
-    public Vector2 wallJumpClimb;
-    public Vector2 wallJumpOff;
-    public Vector2 wallLeap;
-
-    public float wallStickTime = .25f;
-    float timeToWallUnstick;
-
-    public int jumpCountMax = 2;
-    int jumpCount;
+    float inputH;
 
     void Start () {
         controller = GetComponent<Controller2D>();
@@ -46,17 +20,13 @@ public class PlayerControl : MonoBehaviour {
 
         animator = gfx.GetComponent<Animator>();
 
-        CalculateGravityAndJumpVelocity();
-
-        jumpCount = jumpCountMax;
-
 	}
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            AddForce(transform.right, 6);
+            //AddForce(transform.right, 6);
         }
 
         if (Input.GetKey(KeyCode.F))
@@ -64,13 +34,9 @@ public class PlayerControl : MonoBehaviour {
             return;
         }
 
-        float inputH = Input.GetAxisRaw("Horizontal");
+        inputH = Input.GetAxisRaw("Horizontal");
 
         //float inputV = Input.GetAxisRaw("Vertical");
-
-        float targetVelocityX = inputH * speed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing,
-            (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
         if (inputH != 0 && sprite != null)
         {
@@ -78,90 +44,23 @@ public class PlayerControl : MonoBehaviour {
 
         }
 
-        int wallDir = (controller.collisions.left) ? -1 : 1;
+        //滑墙动画
+        animator.SetBool("sliding", controller.wallSliding);
 
-        bool wallSliding = false;
-        if((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
-        {
-            wallSliding = true;
-
-            jumpCount = jumpCountMax;
-
-            if (velocity.y < -wallSlideSpeedMax)
-                velocity.y = -wallSlideSpeedMax;
-
-            if(timeToWallUnstick > 0)
-            {
-                velocityXSmoothing = 0;
-                velocity.x = 0;
-
-                if(inputH != wallDir && inputH != 0)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-
-                    //Debug.Log(timeToWallUnstick);
-                }
-                else
-                {
-                    timeToWallUnstick = wallStickTime;
-                }
-            }
-            else
-            {
-                timeToWallUnstick = wallStickTime;
-            }
-        }
-        animator.SetBool("sliding", wallSliding);
-
-        //上下方有物体时重置y速度
-        if (controller.collisions.above || controller.collisions.below)
-        {
-            velocity.y = 0;
-        }
 
         //接触地面
         if (controller.collisions.below)
         {
-            OnGround();
+            if (animator != null)
+                animator.SetBool("jumping", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount > 0)    //按空格
+        if (Input.GetKeyDown(KeyCode.Space))    //按空格
         {
-            //Debug.Log("Space");
-            jumpCount--;
-
-            if (wallSliding)
-            {
-                if (wallDir == inputH)  //按朝着墙的方向
-                {
-                    velocity.x = -wallDir * wallJumpClimb.x;
-                    velocity.y = wallJumpClimb.y;
-                    StartCoroutine(Jump(velocity));
-                }
-                else if (inputH == 0){  //不按方向键
-                    velocity.x = -wallDir * wallJumpOff.x;
-                    velocity.y = wallJumpOff.y;
-                    StartCoroutine(Jump(velocity));
-                }
-                else 
-                {
-                    //按和墙反方向键
-                    velocity.x = -wallDir * wallLeap.x;
-                    velocity.y = wallLeap.y;
-                    StartCoroutine(Jump(velocity));
-                }
-
-            }
-            else
-            {
-                velocity.y = jumpVelocity;
-                StartCoroutine(Jump(velocity));
-            }
+            StartCoroutine(Jump());
 
         }
 
-        //计算重力速度
-        velocity.y += gravity * Time.deltaTime;
 
         //移动
         //行走动画
@@ -169,9 +68,9 @@ public class PlayerControl : MonoBehaviour {
             animator.SetFloat("speed", Mathf.Abs(inputH));
 
         //特殊跳跃机制
-        GravityJump();
+        //GravityJump();
 
-        if (!controller.collisions.below && !wallSliding && !animator.GetBool("jumping")) 
+        if (!controller.collisions.below && !controller.wallSliding && !animator.GetBool("jumping")) 
         {
             //Debug.Log("自然掉落");
             animator.SetBool("jumping", true);
@@ -180,7 +79,7 @@ public class PlayerControl : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        controller.PreMove(velocity);
+        controller.PreMove(inputH);
 
     }
 
@@ -191,17 +90,9 @@ public class PlayerControl : MonoBehaviour {
         transform.localScale = scale;
     }
 
-    //根据跳跃高度和时间计算重力和速度
-    void CalculateGravityAndJumpVelocity()
-    {
-        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJump, 2);
-
-        jumpVelocity = Mathf.Abs(gravity) * timeToJump;
-    }
-
-
 
     //特殊跳跃机制
+    /*
     void GravityJump()
     {
         if(velocity.y > 0 && !Input.GetButton("Jump"))
@@ -209,40 +100,22 @@ public class PlayerControl : MonoBehaviour {
             //在上升中没按着跳跃键，则附加重力加速落地
             velocity += Vector3.up * gravity * Time.deltaTime;
         }
-    }
+    }*/
 
-    void OnGround()
-    {
-        jumpCount = jumpCountMax;
-
-        if (animator != null)
-            animator.SetBool("jumping", false);
-
-    }
-
-    IEnumerator Jump(Vector3 _velocity)
+    IEnumerator Jump()
     {
         //跳跃
         //jumpCount--;
-
-        velocity = _velocity;
-        if (animator != null)
+        if (controller.Jump())
         {
-            animator.SetBool("jumping", false);
-            yield return new WaitForSeconds(Time.deltaTime);
-            animator.SetBool("jumping", true);
+            if (animator != null)
+            {
+                animator.SetBool("jumping", false);
+                yield return new WaitForSeconds(Time.deltaTime);
+                animator.SetBool("jumping", true);
 
+            }
         }
-
-    }
-
-    public void AddForce(Vector3 _dir, float _amount, float _time = 1)
-    {
-        Vector3 force = _dir.normalized;
-        force *= _amount;
-        force *= transform.localScale.x;
-        velocity += force;
-
     }
 
 }

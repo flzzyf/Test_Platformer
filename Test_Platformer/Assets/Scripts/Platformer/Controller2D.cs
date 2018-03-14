@@ -11,11 +11,22 @@ public class Controller2D : RaycastControl {
     //最大下坡角度（超过会直接掉下来
     public float maxDescendAngle = 55;
 
+    Vector3 velocity;
+    Vector3 forceVelocity;
+
     public override void Start()
     {
         base.Start();
 
         collisions.facing = 1;
+    }
+
+    public void PreMove(Vector3 _velocity, bool _standingOnPlatform = false)
+    {
+        velocity = _velocity;
+        velocity += forceVelocity;
+        forceVelocity = Vector3.zero;
+        Move(velocity * Time.deltaTime, _standingOnPlatform);
     }
 
     //移动
@@ -216,6 +227,15 @@ public class Controller2D : RaycastControl {
 
             }
         }
+    }
+
+    public void AddForce(Vector3 _dir, float _amount, float _time = 1)
+    {
+        Vector3 force = _dir.normalized;
+        force *= _amount;
+        force *= transform.localScale.x;
+        forceVelocity = force;
+
     }
 
     public struct CollisionInfo {

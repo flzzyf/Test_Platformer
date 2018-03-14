@@ -55,6 +55,11 @@ public class PlayerControl : MonoBehaviour {
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            AddForce(transform.right, 6);
+        }
+
         if (Input.GetKey(KeyCode.F))
         {
             return;
@@ -70,7 +75,6 @@ public class PlayerControl : MonoBehaviour {
 
         if (inputH != 0 && sprite != null)
         {
-
             Flip(controller.collisions.facing);
 
         }
@@ -170,16 +174,14 @@ public class PlayerControl : MonoBehaviour {
 
         if (!controller.collisions.below && !wallSliding && !animator.GetBool("jumping")) 
         {
-            Debug.Log("自然掉落");
+            //Debug.Log("自然掉落");
             animator.SetBool("jumping", true);
         }
-
-
     }
 
     private void FixedUpdate()
     {
-        controller.Move(velocity * Time.deltaTime);
+        controller.PreMove(velocity);
 
     }
 
@@ -232,6 +234,15 @@ public class PlayerControl : MonoBehaviour {
             animator.SetBool("jumping", true);
 
         }
+
+    }
+
+    public void AddForce(Vector3 _dir, float _amount, float _time = 1)
+    {
+        Vector3 force = _dir.normalized;
+        force *= _amount;
+        force *= transform.localScale.x;
+        velocity += force;
 
     }
 

@@ -47,6 +47,9 @@ public class ComboControl : MonoBehaviour {
                 {
                     if (comboStatusCounter[i] == 0 || animState.normalizedTime > 0.1f)
                     {
+                        combo[i].action[comboStatusCounter[i]].effect.target = gameObject;
+                        combo[i].action[comboStatusCounter[i]].effect.Trigger();
+
                         comboStatusCounter[i]++;
 
                         //print(comboStatusCounter[i]);

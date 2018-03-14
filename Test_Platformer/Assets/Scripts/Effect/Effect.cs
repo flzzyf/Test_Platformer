@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Effect : ScriptableObject
 {
+    [HideInInspector]
+    public GameObject target;
+
     public virtual void Trigger()
     {
 

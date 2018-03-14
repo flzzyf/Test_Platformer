@@ -12428,13 +12428,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combo:
   - action:
-    - effect: {fileID: 0}
+    - effect: {fileID: 11400000, guid: 662c1cc160b886b42b395978fee74ead, type: 2}
       effectArea: {fileID: 0}
       key: 122
-    - effect: {fileID: 0}
+    - effect: {fileID: 11400000, guid: 662c1cc160b886b42b395978fee74ead, type: 2}
       effectArea: {fileID: 0}
       key: 122
-    - effect: {fileID: 0}
+    - effect: {fileID: 11400000, guid: 662c1cc160b886b42b395978fee74ead, type: 2}
       effectArea: {fileID: 0}
       key: 122
     animStatusName: combo_ZZZ

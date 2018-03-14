@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour {
     float velocityXSmoothing;
 
     Animator animator;
-    GameObject gfx;
+    public GameObject gfx;
 
     SpriteRenderer sprite;
 
@@ -42,7 +42,6 @@ public class PlayerControl : MonoBehaviour {
 
     void Start () {
         controller = GetComponent<Controller2D>();
-        gfx = GameObject.Find("GFX");
         sprite = gfx.GetComponent<SpriteRenderer>();
 
         animator = gfx.GetComponent<Animator>();

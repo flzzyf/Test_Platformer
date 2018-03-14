@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            //AddForce(transform.right, 6);
+            controller.AddForce(transform.right, 6);
         }
 
         if (Input.GetKey(KeyCode.F))
@@ -118,4 +118,26 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
+    int counter = 0;
+
+    public void Girl_Combo_ZZZ()
+    {
+        ComboControl comboControl = GetComponent<ComboControl>();
+
+        print(counter);
+
+        if (counter < 3)
+        {
+
+            //comboControl.combo[0].action[counter].effect.Trigger();
+
+            counter++;
+
+
+        }
+        else
+            counter = 0;
+
+
+    }
 }

@@ -168,7 +168,7 @@ public class Controller2D : RaycastControl {
         if (jumpCount > 0)
         {
             jumpCount--;
-            print(jumpCount);
+            //print(jumpCount);
                   
             float inputH = Input.GetAxisRaw("Horizontal");
 
@@ -384,8 +384,6 @@ public class Controller2D : RaycastControl {
         forceVelocity = force;
 
     }
-
-
 
     //根据跳跃高度和时间计算重力和速度
     void CalculateGravityAndJumpVelocity()

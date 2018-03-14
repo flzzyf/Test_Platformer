@@ -5,12 +5,27 @@ using UnityEngine.Events;
 
 public class AnimationEvent : MonoBehaviour {
 
-    public UnityEvent explode;
+    public UnityEvent girl_Combo_ZZZ;
 
-    public void Event_Explode()
+    Animator animator;
+
+    AnimatorStateInfo animState;
+
+    private void Start()
     {
-        //Debug.Log("meg");
+        animator = GetComponent<Animator>();
 
-        explode.Invoke();
+        animState = animator.GetCurrentAnimatorStateInfo(0);
+    }
+
+    public void Girl_Combo_ZZZ()
+    {
+        girl_Combo_ZZZ.Invoke();
+
+    }
+
+    public void AddForce()
+    { 
+        
     }
 }

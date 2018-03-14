@@ -3,10 +3,10 @@
 [CreateAssetMenu(menuName = "Effect/Effect_Set")]
 public class Effect_Set : Effect
 {
-    public Effect[] effects;
-
     public enum TargetPosType { Null, Point, GameObject }
     public TargetPosType targetPosType = TargetPosType.GameObject;
+
+    public Effect[] effects = new Effect[1];
 
     public override void Trigger()
     {

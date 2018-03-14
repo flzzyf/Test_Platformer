@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Effect/Effect_Force")]
 public class Effect_Force : Effect
 {
-    public float amount = 3;
-    public float time;
-
     public enum TargetType { Target, Caster }
     public TargetType targetType = TargetType.Target;
+
+    public float amount = 3;
+    public float time;
 
     public override void Trigger()
     {

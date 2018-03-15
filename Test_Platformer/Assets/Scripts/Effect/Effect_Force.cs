@@ -13,9 +13,29 @@ public class Effect_Force : Effect
 
     public override void Trigger()
     {
-        Controller2D controller = target.GetComponent<Controller2D>();
+        if (targetType == TargetType.Target)    //对目标释放
+        {
+            Controller2D controller = target.GetComponent<Controller2D>();
 
-        controller.AddForce(target.transform.right, amount);
+            Vector2 dir = target.transform.position - caster.transform.position;
 
+            if (controller != null)
+            {
+                controller.AddForce(dir * amount, amount);
+
+            }
+            else
+            {
+                //target.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                target.GetComponent<Rigidbody2D>().AddForce(dir * amount, ForceMode2D.Impulse);   //没有controller就直接rb施力 
+
+            }
+        }
+        else
+        {
+            Controller2D controller = caster.GetComponent<Controller2D>();
+            controller.AddForce(caster.transform.right, amount);
+
+        }
     }
 }

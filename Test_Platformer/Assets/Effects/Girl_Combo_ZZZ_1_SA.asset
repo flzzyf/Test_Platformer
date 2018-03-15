@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4adc92a64f1dc6247b7851a5874e85bf, type: 3}
+  m_Name: Girl_Combo_ZZZ_1_SA
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  caster: {fileID: 0}
+  offset: {x: 0.5, y: 0.4}
+  radius: 0.25
+  effect: {fileID: 11400000, guid: 7ebf0caf09e37dd42960c7a27d7d6c42, type: 2}
+  filter:
+    filterItems:
+    - name: "\u73A9\u5BB6"
+      Is: 0
+    - name: "\u654C\u65B9"
+      Is: 0
+    - name: "\u7269\u4F53"
+      Is: 1
+    - name: "\u4EBA\u7C7B"
+      Is: 0
+    - name: "\u673A\u68B0"
+      Is: 0

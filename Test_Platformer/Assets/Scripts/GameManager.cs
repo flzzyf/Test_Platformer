@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
     public Effect effect;
 
+    public GameObject caster, target;
+
 	void Start () {
 		
 	}
@@ -15,7 +17,10 @@ public class GameManager : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            effect.Trigger();
+            //effect.target = gameObject;
+            //effect.Trigger();
+
+            effect.Trigger(caster, target);
         }
 	}
 

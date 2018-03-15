@@ -11,6 +11,19 @@ public class Effect : ScriptableObject
     {
 
     }
+    
+    public virtual void Trigger(GameObject _caster)
+    {
+        caster = _caster;
+        Trigger();
+    }
+
+    public virtual void Trigger(GameObject _caster, GameObject _target)
+    {
+        caster = _caster;
+        target = _target;
+        Trigger();
+    }
 
     public virtual void SetupChild(Effect _effect)
     {

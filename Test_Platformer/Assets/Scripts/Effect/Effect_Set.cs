@@ -15,7 +15,7 @@ public class Effect_Set : Effect
 
     public override void Trigger()
     {
-        Mono.instance.StartCoroutine(Delay());
+        MonoUtil.instance.StartCoroutine(Delay());
 
     }
 

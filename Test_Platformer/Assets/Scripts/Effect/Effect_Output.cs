@@ -7,7 +7,7 @@ public class Effect_Output : Effect
 
     public override void Trigger()
     {
-        Debug.Log(text);
+        Debug.Log("Output：" + text);
 
     }
 }

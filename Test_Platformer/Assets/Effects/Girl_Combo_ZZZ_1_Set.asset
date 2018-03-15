@@ -16,5 +16,5 @@ MonoBehaviour:
   targetPosType: 0
   effects:
   - {fileID: 11400000, guid: 662c1cc160b886b42b395978fee74ead, type: 2}
-  - {fileID: 11400000, guid: 96e764ff1cdfc734ca86fdd6ad0828ca, type: 2}
+  - {fileID: 11400000, guid: 5f18b23bb039a4446b528f9b1a39f9c9, type: 2}
   delayTime: 0

@@ -28,7 +28,7 @@ public class PlayerControl : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.X))
         {
-            controller.AddForce(transform.right, 6);
+            //controller.AddForce(transform.right, 6);
         }
 
         if (Input.GetKey(KeyCode.F))
@@ -120,29 +120,4 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
-    public void Girl_Combo_ZZZ(int _index)
-    {
-        ComboControl comboControl = GetComponent<ComboControl>();
-
-        comboControl.combo[0].action[_index].effect.target = gameObject;
-        comboControl.combo[0].action[_index].effect.Trigger();
-
-        foreach (GameObject item in list)
-        {
-            print(item.name);
-            item.GetComponent<Rigidbody2D>().AddForce(transform.right * 3, ForceMode2D.Impulse);
-
-        }
-    }
-
-    List<GameObject> list = new List<GameObject>();
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        list.Add(collision.gameObject);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        list.Remove(collision.gameObject);
-    }
 }

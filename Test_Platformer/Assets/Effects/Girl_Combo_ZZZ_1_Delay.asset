@@ -8,11 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 972abc9b27386364da6a3a6ee88d38cb, type: 3}
-  m_Name: Girl_Combo_ZZZ_1_Push
+  m_Script: {fileID: 11500000, guid: 96e5cc3a8327bc847975f130248bc8bc, type: 3}
+  m_Name: Girl_Combo_ZZZ_1_Delay
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   caster: {fileID: 0}
-  targetType: 0
-  amount: 12
-  time: 0
+  targetPosType: 0
+  effects:
+  - {fileID: 11400000, guid: 96e764ff1cdfc734ca86fdd6ad0828ca, type: 2}
+  delayTime: 0.1

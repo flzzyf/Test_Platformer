@@ -13,6 +13,7 @@ public class Effect_SearchArea : Effect
 
     public override void Trigger()
     {
+        //Debug.Log("SA");
         Vector2 newOffset = offset;
         newOffset.x *= caster.transform.localScale.x;
         Vector2 searchPos = (Vector2)caster.transform.position + newOffset;
@@ -21,6 +22,7 @@ public class Effect_SearchArea : Effect
 
         for (int i = 0; i < colliders.Length; i++)
         {
+            //Debug.Log("目标物体" + colliders[i].name);
             if (colliders[i].GetComponent<Flag>() != null)
             {
                 bool pass = false;  //不合格

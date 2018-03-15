@@ -256,7 +256,6 @@ public class Controller2D : RaycastControl {
                         _velocity.x -= distanceToSlopeStart * directionX;
                     }
                     //爬坡
-                    print("1");
 
                     ClampSlope(ref _velocity, slopeAngle);
                     _velocity.x += distanceToSlopeStart * directionX;
@@ -385,7 +384,8 @@ public class Controller2D : RaycastControl {
     {
         Vector3 force = _dir.normalized;
         force *= _amount;
-        force *= transform.localScale.x;
+
+        //force *= transform.localScale.x;
         forceVelocity = force;
 
     }

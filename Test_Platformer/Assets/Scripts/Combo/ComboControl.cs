@@ -28,10 +28,6 @@ public class ComboControl : MonoBehaviour {
     {
         animState = animator.GetCurrentAnimatorStateInfo(0);
 
-        float animPercent = (animState.normalizedTime % animState.length) / animState.length;
-
-        //print("动画百分比：" + animPercent);
-
         for (int i = 0; i < combo.Length; i++)
         {
             if (comboStatusCounter[i] > 0 && animState.normalizedTime >= 0.9f)
@@ -47,17 +43,45 @@ public class ComboControl : MonoBehaviour {
                 {
                     if (comboStatusCounter[i] == 0 || animState.normalizedTime > 0.3f)
                     {
-                        combo[i].action[comboStatusCounter[i]].effect.Trigger(gameObject);
+                        StartCoroutine(DelayEffect(i, comboStatusCounter[i]));
 
                         comboStatusCounter[i]++;
 
                         //print(comboStatusCounter[i]);
 
                         SetComboStatus(i, comboStatusCounter[i]);
+
                     }
-                 }
+                }
             }
         }
+    }
+
+    IEnumerator DelayEffect(int _index, int _statusIndex)
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+
+        animState = animator.GetCurrentAnimatorStateInfo(0);
+
+        //if(_statusIndex != 0)
+        //yield return new WaitForSeconds(animState.length);
+
+        string animName = combo[_index].animStatusName + "_" + (_statusIndex + 1);
+        //print(animName);
+
+        while (!animState.IsName(animName))
+        {
+            //print(animState.normalizedTime);
+            //animState = animator.GetCurrentAnimatorStateInfo(0);
+
+            yield return new WaitForSeconds(Time.deltaTime);
+
+        }
+
+        //print(animName + " 执行");
+
+        combo[_index].action[_statusIndex].effect.Trigger(gameObject);
+
     }
 
     void SetComboStatus(int _index, int _status)

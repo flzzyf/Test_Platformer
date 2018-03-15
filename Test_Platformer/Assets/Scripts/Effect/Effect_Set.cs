@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Effect/Effect_Set")]
 public class Effect_Set : Effect
@@ -8,10 +10,22 @@ public class Effect_Set : Effect
 
     public Effect[] effects = new Effect[1];
 
+    public float delayTime;
+    float timer;
+
     public override void Trigger()
     {
-        foreach (var item in effects)
+        Mono.instance.StartCoroutine(Delay());
+
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        foreach (Effect item in effects)
         {
+            SetupChild(item);
             item.Trigger();
         }
     }

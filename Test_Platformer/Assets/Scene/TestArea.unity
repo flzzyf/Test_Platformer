@@ -5644,6 +5644,16 @@ Prefab:
       propertyPath: combo.Array.data[0].animStatusName
       value: Girl_Combo_ZZZ
       objectReference: {fileID: 0}
+    - target: {fileID: 114515747529742390, guid: 815a9df17200435439713e3ff0f0cdd9,
+        type: 2}
+      propertyPath: jumpHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114515747529742390, guid: 815a9df17200435439713e3ff0f0cdd9,
+        type: 2}
+      propertyPath: timeToJump
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 60106647040004656, guid: 815a9df17200435439713e3ff0f0cdd9, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 815a9df17200435439713e3ff0f0cdd9, type: 2}
@@ -10126,6 +10136,7 @@ GameObject:
   - component: {fileID: 1729207473}
   - component: {fileID: 1729207472}
   - component: {fileID: 1729207477}
+  - component: {fileID: 1729207478}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10217,6 +10228,18 @@ MonoBehaviour:
   target: {fileID: 789498959}
   smoothSpeed: 0.125
   offset: {x: 0, y: 0.7, z: -5.44}
+--- !u!114 &1729207478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1729207471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 1123c6fd5cd037e46bf7c97839edbdc7, type: 2}
 --- !u!1 &1735568085
 GameObject:
   m_ObjectHideFlags: 0
